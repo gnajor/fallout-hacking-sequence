@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { gameConfig } from "$lib/gameConfig";
     import { calcLikeness } from "$lib/gameLogic";
     import { randomItem } from "$lib/utils";
     import { gameStateData } from "../state/gameState.svelte";
@@ -25,6 +26,11 @@
 
         return () => clearInterval(interval);
     });
+
+    $effect(() => {
+        gameStateData.grid;
+        if(!gameStateData.gridLoaded) return;
+    })
 
     function onmouseenter(item: Token){
         if(item.type === "non_inter") return;

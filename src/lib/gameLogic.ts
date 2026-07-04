@@ -8,8 +8,6 @@ export async function generateGrid(difficulty: number) : Promise<Token[]>{
     const allWords: string[] = await fetchWords(difficulty);
     const totalcells = gameConfig.gridColsInter * gameConfig.gridRows;
 
-    console.log(checkParanthesis("{_}](´#{^?`}".split("")));
-
     const raw: Token[] = Array.from(
         {length: totalcells},
         () => ({
