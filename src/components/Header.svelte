@@ -11,14 +11,14 @@
 
 <header>
     <div id="title-container">
-        <h1>
+        <h1 class="scan-text">
             <TypeLine 
                 text={companyText}
                 onDone={() => companyTextLoaded = true}
             />
         </h1>
         {#if companyTextLoaded}
-            <h1>
+            <h1 class="scan-text">
                 <TypeLine 
                     text={passowordText}
                     onDone={() => headerLoaded = true}
@@ -28,7 +28,7 @@
     </div>
 
     <div id="attempts-container" class:visible={gameStateData.gridLoaded}>
-        <h1>Attempts Remaining:</h1>
+        <h1 class="scan-text">Attempts Remaining:</h1>
         <div id="attempts-left">
             {#each {length: gameStateData.attemptsLeft}}
                 <div class="attempt"></div>

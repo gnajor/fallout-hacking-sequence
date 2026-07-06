@@ -133,6 +133,7 @@
     {#if headerLoaded}
         {#each gameStateData.grid as item, i}
             <button 
+                class="scan-text"
                 role="cell" 
                 tabindex={item.type !== 'non_inter' ? 0 : -1}
                 class:marked={item.groupId === hoveredGroupId}
@@ -174,7 +175,7 @@
     .grid .marked,
     .grid > button:not(.non-inter):hover{
         background-color: var(--main-color);
-        color: #000;
+        color: #000 !important;
         text-shadow: none;
     }
 

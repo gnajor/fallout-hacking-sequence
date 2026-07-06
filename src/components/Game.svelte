@@ -2,20 +2,29 @@
     import { generateGrid } from "$lib/gameLogic";
     import { gameStateData } from "../state/gameState.svelte";
     import { onMount } from "svelte";
+    import { startScanClock } from "$lib/scanClock";
     import Grid from "./Grid.svelte";
     import Header from "./Header.svelte";
     import OutputContainer from "./OutputContainer.svelte";
-    
+
+    let terminalEl: HTMLElement;
+    let barEl: HTMLElement;
+
     onMount(async () => {
         gameStateData.grid = await generateGrid(gameStateData.difficulty);
     });
 
+    $effect(() => {
+        if (gameStateData.gridLoaded && barEl) {
+            startScanClock(terminalEl, barEl);
+        }
+    });
+
     let headerLoaded = $state(false);
 </script>
-
 <div id="wrapper">
     <div id="chassi">
-        <div id="terminal">
+        <div id="terminal" bind:this={terminalEl}>
             <div class="refresh-line"></div>
             <Header bind:headerLoaded/>
             <main>
@@ -24,6 +33,9 @@
                 {/if}
                 <OutputContainer/>
             </main>
+            {#if gameStateData.gridLoaded}
+                <div class="scan-bar" bind:this={barEl}></div>
+            {/if}
         </div>
     </div>
 </div>
@@ -34,6 +46,17 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+   .scan-bar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 400px; 
+        pointer-events: none;
+        z-index: 3;
+       /*  background: color-mix(in srgb, var(--main-color) 8%, transparent);  */
     }
 
     #chassi{
