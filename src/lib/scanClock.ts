@@ -1,4 +1,4 @@
-const SPEED_PX_PER_SEC = 350;   // how fast the bar sweeps down
+const SPEED_PX_PER_SEC = 300;   // how fast the bar sweeps down
 const PAUSE_SECONDS = 10;      // pause before looping back to top
 const BAR_HEIGHT = 400;          // px — roughly 4 rows tall, tune to your font size
 

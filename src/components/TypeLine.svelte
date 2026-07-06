@@ -1,6 +1,9 @@
 <script lang="ts">
-    const {text, speed=10, onDone} = $props<{
+    import { gameStateData } from "../state/gameState.svelte";
+
+    const {text, cancelled, speed=10, onDone} = $props<{
         text: String,
+        cancelled: boolean,
         speed?: Number,
         onDone?: () => void;
     }>();
@@ -8,6 +11,12 @@
     let visible = $state(0);
 
     $effect(() => {
+        if (cancelled) {
+            visible = text.length;
+            onDone?.();
+            return;
+        }
+
         let i = 0;
 
         const interval = setInterval(() => {

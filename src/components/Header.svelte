@@ -2,7 +2,7 @@
     import { gameStateData } from "../state/gameState.svelte";
     import TypeLine from "./TypeLine.svelte";
 
-    let { headerLoaded = $bindable(false) } = $props()
+    let { headerLoaded = $bindable(false), cancelled = $bindable(false) } = $props();
     let companyTextLoaded = $state(false);
 
     const companyText = "Welcome to ROBCO Industries (TM) Termlink";
@@ -14,6 +14,7 @@
         <h1 class="scan-text">
             <TypeLine 
                 text={companyText}
+                {cancelled}
                 onDone={() => companyTextLoaded = true}
             />
         </h1>
@@ -21,6 +22,7 @@
             <h1 class="scan-text">
                 <TypeLine 
                     text={passowordText}
+                    {cancelled}
                     onDone={() => headerLoaded = true}
                 />
             </h1>

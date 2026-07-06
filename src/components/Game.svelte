@@ -7,8 +7,8 @@
     import Header from "./Header.svelte";
     import OutputContainer from "./OutputContainer.svelte";
 
-    let terminalEl: HTMLElement;
-    let barEl: HTMLElement;
+    let terminalEl = $state<HTMLElement>();
+    let barEl = $state<HTMLElement>();
 
     onMount(async () => {
         gameStateData.grid = await generateGrid(gameStateData.difficulty);
@@ -16,20 +16,33 @@
 
     $effect(() => {
         if (gameStateData.gridLoaded && barEl) {
-            startScanClock(terminalEl, barEl);
+            startScanClock(
+                terminalEl as HTMLElement, 
+                barEl as HTMLElement
+            );
         }
     });
 
+    $effect(() => {
+        if(cancelled) return;
+        const onKeydown = () => {
+            cancelled = true;
+            gameStateData.gridLoaded = true;
+        };
+        window.addEventListener('keydown', onKeydown, { once: true });
+    });
+
     let headerLoaded = $state(false);
+    let cancelled = $state(false);
+
 </script>
 <div id="wrapper">
     <div id="chassi">
         <div id="terminal" bind:this={terminalEl}>
-            <div class="refresh-line"></div>
-            <Header bind:headerLoaded/>
+            <Header bind:headerLoaded bind:cancelled/>
             <main>
                 {#if headerLoaded}
-                    <Grid {headerLoaded}/>
+                    <Grid {headerLoaded} bind:cancelled/>
                 {/if}
                 <OutputContainer/>
             </main>

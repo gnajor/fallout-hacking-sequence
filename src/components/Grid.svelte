@@ -1,16 +1,24 @@
 <script lang="ts">
-    import { gameConfig } from "$lib/gameConfig";
     import { calcLikeness } from "$lib/gameLogic";
     import { randomItem } from "$lib/utils";
     import { gameStateData } from "../state/gameState.svelte";
     import type { Token } from "../types/game";
 
-    let { headerLoaded }: {headerLoaded: boolean} = $props();
+    let {headerLoaded, cancelled = $bindable(false)}: {
+        headerLoaded: boolean, 
+        cancelled: boolean
+    } = $props();
 
     let hoveredGroupId = $state<string | null>(null);
     let visibleCount = $state(0);
 
     $effect(() => {
+        if(cancelled){
+            visibleCount = gameStateData.grid.length;
+            gameStateData.gridLoaded = true;
+            return;
+        }
+
         gameStateData.grid;
         visibleCount = 0;
         gameStateData.gridLoaded = false;
@@ -26,11 +34,6 @@
 
         return () => clearInterval(interval);
     });
-
-    $effect(() => {
-        gameStateData.grid;
-        if(!gameStateData.gridLoaded) return;
-    })
 
     function onmouseenter(item: Token){
         if(item.type === "non_inter") return;

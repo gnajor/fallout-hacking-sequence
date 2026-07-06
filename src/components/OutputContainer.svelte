@@ -23,11 +23,11 @@
 
 <div id="outputContainer">
     {#each gameStateData.outputLog as output}
-        <p>{output}</p>
+        <p class="scan-text">{output}</p>
     {/each}
     {#if gameStateData.gridLoaded}
         <div id="firstOutput">
-            <p id="hovering">
+            <p id="hovering" class="scan-text">
                 {#each hovering.split("") as char, i}
                     {#if i < visibleCount}
                         <span>{char}</span>
