@@ -1,8 +1,8 @@
 const SPEED_PX_PER_SEC = 300;   // how fast the bar sweeps down
-const PAUSE_SECONDS = 10;      // pause before looping back to top
+const PAUSE_SECONDS = 8;      // pause before looping back to top
 const BAR_HEIGHT = 400;          // px — roughly 4 rows tall, tune to your font size
 
-const FLASH_COLOR = "color-mix(in srgb, #0cff06 55%, white)"; // lightened tint, tune the 55% to taste
+const FLASH_COLOR = "color-mix(in srgb, #0cff06 50%, white)"; // lightened tint, tune the 55% to taste
 
 let started = false;
 

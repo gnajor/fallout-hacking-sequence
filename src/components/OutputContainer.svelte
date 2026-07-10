@@ -22,8 +22,10 @@
 </script>
 
 <div id="outputContainer">
-    {#each gameStateData.outputLog as output}
-        <p class="scan-text">{output}</p>
+    {#each gameStateData.outputLog as outputArr}
+        {#each outputArr as output}
+            <p class="scan-text">{output}</p>
+        {/each}
     {/each}
     {#if gameStateData.gridLoaded}
         <div id="firstOutput">

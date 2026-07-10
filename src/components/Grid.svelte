@@ -59,11 +59,17 @@
     function onGuess(word: string, type: string, groupId: string | undefined): void{
         if(word === gameStateData.password) gameStateData.status = "won";
 
+        if(gameStateData.maxTriesOutput === gameStateData.outputLog.length){
+            gameStateData.outputLog.splice(0, 1);
+        }
+
         if(type === "word" || type === "junk"){
             const likeness = calcLikeness(word, gameStateData.password);
-            gameStateData.outputLog.push(">" + word);
-            gameStateData.outputLog.push(">Entry denied");
-            gameStateData.outputLog.push(">Likeness=" + likeness);
+            gameStateData.outputLog.push([
+                ">" + word,
+                ">Entry denied",
+                ">Likeness=" + likeness
+            ]);
             gameStateData.attemptsLeft--;
         }
         else if(type === "bracket" && word.length > 1){
@@ -71,13 +77,17 @@
 
             if(removeWordEffect){
                 removeWord(groupId as string);
-                gameStateData.outputLog.push(">" + word);
-                gameStateData.outputLog.push(">Dud Removed");
+                gameStateData.outputLog.push([
+                    ">" + word,
+                    ">Dud Removed"
+                ]);
             }
             else{
                 addAttempt(groupId as string)
-                gameStateData.outputLog.push(">" + word);
-                gameStateData.outputLog.push(">Try Reset");
+                gameStateData.outputLog.push([
+                    ">" + word,
+                    ">Try Reset"
+                ]);
             }
         }
 

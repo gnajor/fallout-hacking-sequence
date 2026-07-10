@@ -9,9 +9,26 @@
 
     let terminalEl = $state<HTMLElement>();
     let barEl = $state<HTMLElement>();
+    let pulse = $state(false);
+    let headerLoaded = $state(false);
+    let cancelled = $state(false);
 
     onMount(async () => {
         gameStateData.grid = await generateGrid(gameStateData.difficulty);
+    });
+
+    onMount(() => {
+        const delay = 6000 + Math.random() * 7000;
+
+        const interval = setInterval(() => {
+            pulse = true;
+
+            setTimeout(() => {
+                pulse = false;
+            }, 2500);
+        }, delay);
+
+        return () => clearInterval(interval);
     });
 
     $effect(() => {
@@ -29,38 +46,25 @@
             cancelled = true;
             gameStateData.gridLoaded = true;
         };
-        window.addEventListener('keydown', onKeydown, { once: true });
+        window.addEventListener("keydown", onKeydown, { once: true });
+        window.addEventListener("click", onKeydown, {once: true});
     });
-
-    let headerLoaded = $state(false);
-    let cancelled = $state(false);
-
 </script>
-<div id="wrapper">
-    <div id="chassi">
-        <div id="terminal" bind:this={terminalEl}>
-            <Header bind:headerLoaded bind:cancelled/>
-            <main>
-                {#if headerLoaded}
-                    <Grid {headerLoaded} bind:cancelled/>
-                {/if}
-                <OutputContainer/>
-            </main>
-            {#if gameStateData.gridLoaded}
-                <div class="scan-bar" bind:this={barEl}></div>
-            {/if}
-        </div>
-    </div>
+
+<div id="terminal" class:pulse={pulse} bind:this={terminalEl}>
+    <Header bind:headerLoaded bind:cancelled/>
+    <main>
+        {#if headerLoaded}
+            <Grid {headerLoaded} bind:cancelled/>
+        {/if}
+        <OutputContainer/>
+    </main>
+    {#if gameStateData.gridLoaded}
+        <div class="scan-bar" bind:this={barEl}></div>
+    {/if}
 </div>
 
 <style>
-    #wrapper{
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
    .scan-bar {
         position: absolute;
         left: 0;
@@ -72,32 +76,8 @@
        /*  background: color-mix(in srgb, var(--main-color) 8%, transparent);  */
     }
 
-    #chassi{
-        background-image: url("/images/background5.png");
-        background-size: cover;
-        background-position: center;
-        width: 83rem;
-        aspect-ratio: 1450 / 980;
-        position: relative; 
-    }
-
     #terminal{
-        position: absolute;
-        top: 12.5%;    
-        left: 17%;
-        width: 55%;
-        height: 63%;
-
         padding: 2rem 2.5rem;
-        border-radius: 2rem;
-        background-color: black;
-        box-shadow:
-        inset 0 0 60px rgba(0, 0, 0, 0.95),
-        inset 0 0 20px rgba(0, 0, 0, 0.9),
-        0 0 8rem 6rem rgba(0, 0, 0, 0.9),
-        0 0 3rem 2rem rgba(255, 255, 255, 0.06);
-        overflow: hidden;
-        filter: blur(0.3px);
     }
 
     #terminal::before {
