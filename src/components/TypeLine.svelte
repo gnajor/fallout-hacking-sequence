@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { gameStateData } from "../state/gameState.svelte";
-
     const {text, cancelled, speed=10, onDone} = $props<{
         text: String,
         cancelled: boolean,

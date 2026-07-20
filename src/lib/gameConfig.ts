@@ -1,5 +1,3 @@
-import { gameStateData } from "../state/gameState.svelte";
-
 export const gameConfig = {
     gridColsInter: 24,
     gridRows: 16,

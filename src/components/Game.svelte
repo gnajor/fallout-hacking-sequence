@@ -51,7 +51,8 @@
     });
 </script>
 
-<div id="terminal" class:pulse={pulse} bind:this={terminalEl}>
+
+<div id="screen" class:pulse={pulse} bind:this={terminalEl}>
     <Header bind:headerLoaded bind:cancelled/>
     <main>
         {#if headerLoaded}
@@ -76,11 +77,11 @@
        /*  background: color-mix(in srgb, var(--main-color) 8%, transparent);  */
     }
 
-    #terminal{
+    #screen{
         padding: 2rem 2.5rem;
     }
 
-    #terminal::before {
+    #screen::before {
         content: '';
         position: absolute;
         inset: 0;
@@ -97,7 +98,7 @@
     }
 
 
-    #terminal::after {
+    #screen::after {
         content: '';
         position: absolute;
         inset: 0;

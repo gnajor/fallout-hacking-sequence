@@ -83,9 +83,7 @@ function setParanthesisId(arr: Token[], cols: number, rows: number,): Token[]{
         const coords = checkParanthesis(
             arr.slice(first, last).map(elem => elem.value)
         );
-
-        console.log(checkParanthesis("[´/[,(`]".split("")));
-
+        
         if(!coords?.length) continue; 
    
         const outerCoords = coords.filter((coord) => 

@@ -1,17 +1,59 @@
 <script lang="ts">
 	import favicon from "$lib/assets/favicon.svg";
+    import { audio, tracks } from "$lib/audioState.svelte";
+    import { onMount } from "svelte";
 	import "../app.css";
+    import AudioController from "../components/audioController.svelte";
+    import { page } from "$app/state";
 
 	let { children } = $props();
+	let musicEl: HTMLAudioElement;
+    const isLandingPage = $derived(page.url.pathname === "/");
+
+    onMount(() => {
+        audio.activeEl = musicEl;
+    });
+
+    $effect(() => {
+        if(audio.activeEl === null && musicEl){
+            audio.activeEl = musicEl;
+            musicEl.volume = 0;
+            audio.volume = 0;
+        }
+    });
+
+    $effect(() => {
+        if(!musicEl) return;
+        if(isLandingPage){
+            musicEl.pause();
+            audio.volume = 0;
+        } else{
+            musicEl.play();
+        }
+    });
+
+	function nextTrack() {
+        audio.trackIndex = (audio.trackIndex + 1) % tracks.length;
+    }
 </script>
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
+<audio 
+    bind:this={musicEl} 
+    src={tracks[audio.trackIndex]} 
+    autoplay 
+    onended={nextTrack}
+></audio>
+
 <div id="wrapper">
     <div id="chassi">
-		{@render children()}
+		<div id="terminal">
+			{@render children()}
+		</div>
+		<AudioController/>
 	</div>
 </div>
 
@@ -32,5 +74,23 @@
         width: 83rem;
         aspect-ratio: 1450 / 980;
         position: relative; 
+    }
+
+    #terminal{
+        position: absolute;
+        top: 12.5%;    
+        left: 17%;
+        width: 55%;
+        height: 63%;
+
+        border-radius: 2rem;
+        background-color: black;
+        box-shadow:
+        inset 0 0 60px rgba(0, 0, 0, 0.95),
+        inset 0 0 20px rgba(0, 0, 0, 0.9),
+        0 0 8rem 6rem rgba(0, 0, 0, 0.9),
+        0 0 3rem 2rem rgba(255, 255, 255, 0.06);
+        overflow: hidden;
+        filter: blur(0.3px);
     }
 </style>

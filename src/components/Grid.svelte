@@ -97,7 +97,7 @@
     }
 
     function removeWord(groupId: string){
-        const randWord = randomItem(gameStateData.words);
+        const randWord = randomItem(gameStateData.words.filter(word => word !== gameStateData.password));
         gameStateData.words.splice(gameStateData.words.indexOf(randWord), 1);
 
         for(let i = 0; i < gameStateData.grid.length; i++){
