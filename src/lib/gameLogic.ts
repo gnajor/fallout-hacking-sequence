@@ -4,8 +4,8 @@ import { randomInt, randomItem, shuffle } from "$lib/utils";
 import { gameStateData } from "../state/gameState.svelte.ts";
 import { gameConfig } from "./gameConfig.ts";
 
-export async function generateGrid(difficulty: number) : Promise<Token[]>{
-    const allWords: string[] = await fetchWords(difficulty);
+export async function generateGrid(wordLength: number) : Promise<Token[]>{
+    const allWords: string[] = await fetchWords(wordLength);
     const totalcells = gameConfig.gridColsInter * gameConfig.gridRows;
 
     const raw: Token[] = Array.from(
@@ -17,7 +17,7 @@ export async function generateGrid(difficulty: number) : Promise<Token[]>{
         })
     );
     
-    const wordsAmount = gameStateData.wordsAmount;
+    const wordsAmount = gameStateData.wordsAmount as number;
     let {words, password} = pickWords(allWords, wordsAmount);
     words = words.map(word => word.toUpperCase());
     password = password.toUpperCase();
@@ -192,7 +192,7 @@ export function pickWords(allWords: string[], amount: number): { words: string[]
     picked.add(password);
 
     return{
-        words: shuffle([...picked]).slice(0, amount),
+        words: shuffle([...picked]),
         password,
     };
 }
@@ -222,6 +222,7 @@ function checkParanthesis(arr: string[]): {startIndex: number, endIndex: number}
 
 export function calcLikeness(word: string, password: string): number{
     let likeness = 0;
+    console.log(word, password)
 
     for(let i = 0; i < word.length; i++){
         const wordLetter = word[i];
@@ -256,8 +257,8 @@ function generateNonInterData(rows: number): string[]{
     });
 }
 
-async function fetchWords(difficulty: number): Promise<string[]> {
-    const res = await fetch(`/data/words/words_${difficulty}.json`);
-    if(!res.ok) throw new Error(`Failed to fetch words for length ${difficulty}`);
+async function fetchWords(wordLength: number): Promise<string[]> {
+    const res = await fetch(`/data/words/words_${wordLength}.json`);
+    if(!res.ok) throw new Error(`Failed to fetch words for length ${wordLength}`);
     return res.json();
 }

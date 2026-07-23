@@ -37,15 +37,16 @@
 
 <style>
     #screen{
-        position: relative;
+        width: 100%;
+        height: 100%;
         overflow: hidden;
     }
 
     video{
         width: 100%;
-        height: 100%;
         object-fit: cover;
         transform: scale(1.1);
+        line-height: 0;
         transform-origin: center center;
     }
 

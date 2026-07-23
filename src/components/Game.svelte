@@ -1,6 +1,6 @@
 <script lang="ts">
     import { generateGrid } from "$lib/gameLogic";
-    import { gameStateData } from "../state/gameState.svelte";
+    import { gameStateData, loadLevel } from "../state/gameState.svelte";
     import { onMount } from "svelte";
     import { startScanClock } from "$lib/scanClock";
     import Grid from "./Grid.svelte";
@@ -14,7 +14,8 @@
     let cancelled = $state(false);
 
     onMount(async () => {
-        gameStateData.grid = await generateGrid(gameStateData.difficulty);
+        loadLevel(gameStateData.currentLevel - 1);
+        gameStateData.grid = await generateGrid(gameStateData.wordLength);
     });
 
     onMount(() => {

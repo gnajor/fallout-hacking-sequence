@@ -72,7 +72,6 @@
         width: 4px;
         height: 100%;
         background: var(--main-color);
-        border-radius: 0px;
         outline: none;
         border: none;
         cursor: none;
@@ -90,6 +89,7 @@
         height: 11px;
         background: var(--main-color);
         cursor: var(--cursor);
+        border-radius: 50%;
     }
 
     input[type="range"]::-moz-range-thumb {

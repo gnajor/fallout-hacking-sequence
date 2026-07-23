@@ -23,6 +23,7 @@ body{
     margin: 0;
     background-color: #000;
     cursor: var(--cursor);
+    overflow: hidden;
 }
 
 @font-face {
@@ -35,12 +36,11 @@ button{
 }
 
 .scan-text {
-    filter: brightness(1);
-    transition: filter 2500ms ease-in-out;
+    opacity: 1;
+    transition: opacity 2500ms ease-in-out;
 }
 .pulse .scan-text {
-    filter: brightness(0.55);
+    opacity: 0.55;
 }
-
 
  

@@ -1,6 +1,7 @@
 <script lang="ts">
-    let {mode}: {
-        mode: "loading" | "success" ;
+    let {mode, gameMode}: {
+        mode: "loading" | "victory" | "loss" ;
+        gameMode: "run" | "practice" | "daily"
     } = $props();
 
 </script>
@@ -11,7 +12,7 @@
             <img src="/images/walking.gif" alt="Fallout boy walking gif">
             <p>Initiating...</p>
         </div>
-    {:else if mode === "success"}
+    {:else if mode === "victory"}
         <div id="container">
             <img src="/images/thumbs_up.gif" alt="Fallout boy making thumbs up gif">
             <p>Password Accepted</p>
