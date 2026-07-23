@@ -13,7 +13,6 @@
             const timeout = setTimeout(() => {
                 gameStateData.currentLevel++;
                 showStatus = false;
-                console.log(gameStateData.status);
             }, 4000);
 
             return () => clearTimeout(timeout);
@@ -28,7 +27,7 @@
         gameMode={"run"} 
     />
 {:else}    
-    <Game/>
+    <Game/>ß
 {/if}
 
 

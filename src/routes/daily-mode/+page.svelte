@@ -7,6 +7,6 @@
 {#if gameStateData.status === "playing"}
     <Game/>
 {:else if gameStateData.status === "won"}
-    <StatusScreen mode="success"/>
+    <StatusScreen gameMode="daily" mode="victory"/>
 {:else}
 {/if}

@@ -8,9 +8,9 @@
         <p>Main Menu</p>
     </header>
     <main>
-        <a href="/hacking">DAILY CHALLANGE</a>
+        <a href="/daily-mode">DAILY CHALLANGE</a>
         <a href="run-mode">RUN MODE</a>
-        <a href="/practice-mode">PRACTICE MODE</a>
+        <a href="/levels">PRACTICE MODE</a>
         <a href="">LEADERBOARD</a>
     </main>
     <footer>
