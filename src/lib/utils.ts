@@ -9,3 +9,7 @@ export function randomItem<T>(arr: T[]): T {
 export function shuffle<T>(arr: T[]): T[] {
     return [...arr].sort(() => Math.random() - 0.5);
 }
+
+export function wait(ms: number){
+    return new Promise(resolve => setTimeout(resolve, ms));
+}

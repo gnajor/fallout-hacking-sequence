@@ -6,30 +6,23 @@
     import Grid from "./Grid.svelte";
     import Header from "./Header.svelte";
     import OutputContainer from "./OutputContainer.svelte";
+    import StatusScreen from "./StatusScreen.svelte";
+    import { wait } from "$lib/utils";
+
+    let {showLevel}: {showLevel: boolean} = $props();
 
     let terminalEl = $state<HTMLElement>();
     let barEl = $state<HTMLElement>();
     let pulse = $state(false);
     let headerLoaded = $state(false);
     let cancelled = $state(false);
+    let loaded = $state(false);
+    let loadingScreen = $state(false);
 
     onMount(async () => {
         loadLevel(gameStateData.currentLevel - 1);
+        setTimeout(() => { loaded = true;}, 1000);
         gameStateData.grid = await generateGrid(gameStateData.wordLength);
-    });
-
-    onMount(() => {
-        const delay = 6000 + Math.random() * 7000;
-
-        const interval = setInterval(() => {
-            pulse = true;
-
-            setTimeout(() => {
-                pulse = false;
-            }, 2500);
-        }, delay);
-
-        return () => clearInterval(interval);
     });
 
     $effect(() => {
@@ -38,11 +31,20 @@
                 terminalEl as HTMLElement, 
                 barEl as HTMLElement
             );
+
+            const delay = 6000 + Math.random() * 7000;
+            const interval = setInterval(async () => {
+                pulse = true;
+                await wait(2500);
+                pulse = false;
+            }, delay);
+            
+            return () => clearInterval(interval);
         }
     });
 
     $effect(() => {
-        if(cancelled) return;
+        if(cancelled || !loaded) return;
         const onKeydown = () => {
             cancelled = true;
             gameStateData.gridLoaded = true;
@@ -52,19 +54,27 @@
     });
 </script>
 
-
-<div id="screen" class:pulse={pulse} bind:this={terminalEl}>
-    <Header bind:headerLoaded bind:cancelled/>
-    <main>
-        {#if headerLoaded}
-            <Grid {headerLoaded} bind:cancelled/>
+{#if loaded}
+    <div id="screen" class:pulse={pulse} bind:this={terminalEl}>
+        <Header bind:headerLoaded bind:cancelled/>
+        <main>
+            {#if headerLoaded}
+                <Grid {headerLoaded} bind:cancelled/>
+            {/if}
+            <OutputContainer/>
+        </main>
+        {#if gameStateData.gridLoaded}
+            <div class="scan-bar" bind:this={barEl}></div>
         {/if}
-        <OutputContainer/>
-    </main>
-    {#if gameStateData.gridLoaded}
-        <div class="scan-bar" bind:this={barEl}></div>
+    </div>
+{:else}
+    {#if showLevel}
+        <StatusScreen loadingType="level"/>
+    {:else}
+        <StatusScreen loadingType="initiating"/>
     {/if}
-</div>
+{/if}
+
 
 <style>
    .scan-bar {

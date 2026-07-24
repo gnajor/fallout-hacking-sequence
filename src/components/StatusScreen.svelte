@@ -1,21 +1,20 @@
 <script lang="ts">
-    let {mode, gameMode}: {
-        mode: "loading" | "victory" | "loss" ;
-        gameMode: "run" | "practice" | "daily"
-    } = $props();
+    import { gameStateData } from "../state/gameState.svelte";
+
+ 
+const {loadingType}: {loadingType: "level" | "initiating"} = $props();
 
 </script>
 
 <div id="status-screen">
-    {#if mode === "loading"}
+    {#if loadingType === "initiating"}
         <div id="container">
             <img src="/images/walking.gif" alt="Fallout boy walking gif">
             <p>Initiating...</p>
         </div>
-    {:else if mode === "victory"}
+    {:else if loadingType === "level"}
         <div id="container">
-            <img src="/images/thumbs_up.gif" alt="Fallout boy making thumbs up gif">
-            <p>Password Accepted</p>
+            <h1>Level {gameStateData.currentLevel}</h1>
         </div>
     {/if}
 </div>
@@ -45,5 +44,9 @@
 
     img{
         width: 12vw;
+    }
+
+    h1{
+        color: var(--main-color);
     }
 </style>

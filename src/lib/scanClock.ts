@@ -7,7 +7,7 @@ const FLASH_COLOR = "color-mix(in srgb, #0cff06 50%, white)"; // lightened tint,
 let started = false;
 
 export function startScanClock(containerEl: HTMLElement, barEl: HTMLElement) {
-    if (started) return;
+/*     if (started) return;
     started = true;
 
     let start: number | null = null;
@@ -53,5 +53,5 @@ export function startScanClock(containerEl: HTMLElement, barEl: HTMLElement) {
         requestAnimationFrame(frame);
     }
 
-    requestAnimationFrame(frame);
+    requestAnimationFrame(frame); */
 }

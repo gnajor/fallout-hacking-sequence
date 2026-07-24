@@ -10,7 +10,7 @@ export const gameStateData = $state({
     outputLog: [] as string[][],
     status: "playing" as "playing" | "won" | "lost",
     gridLoaded: false,
-    hovering: "",
+    hovering: "" as string,
     currentLevel: 1,
     
     wordLength: 4 as 4 | 5 | 6 | 7 | 8 | 9,
@@ -28,8 +28,11 @@ export function loadLevel(index: number){
     gameStateData.attemptsLeft = 4;
     gameStateData.outputLog = [];
     gameStateData.status = "playing";
+    gameStateData.hovering = "";
     gameStateData.grid = [];
     gameStateData.words = [];
+    gameStateData.gridLoaded = false;
 }
+
 
 

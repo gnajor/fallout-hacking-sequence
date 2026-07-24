@@ -4,9 +4,11 @@
     import { gameStateData } from "../../state/gameState.svelte";
 </script>
 
+
+
 {#if gameStateData.status === "playing"}
-    <Game/>
+    <Game showLevel={false}/>
 {:else if gameStateData.status === "won"}
-    <StatusScreen gameMode="daily" mode="victory"/>
+    <!-- <StatusScreen gameMode="daily" mode="victory"/> -->
 {:else}
 {/if}

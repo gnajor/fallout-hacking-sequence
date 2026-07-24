@@ -58,8 +58,7 @@
 
     function onGuess(word: string, type: string, groupId: string | undefined): void{
         if(word === gameStateData.password){
-            console.log("what")
-         gameStateData.status = "won";
+            gameStateData.status = "won";
         }
 
         if(gameStateData.maxTriesOutput === gameStateData.outputLog.length){

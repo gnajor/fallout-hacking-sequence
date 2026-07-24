@@ -10,7 +10,7 @@
 	let musicEl: HTMLAudioElement;
     const isLandingPage = $derived(page.url.pathname === "/");
 
-    onMount(() => {
+    onMount(async () => {
         audio.activeEl = musicEl;
     });
 

@@ -3,9 +3,10 @@ import { chars } from "$lib/data/chars";
 import { randomInt, randomItem, shuffle } from "$lib/utils";
 import { gameStateData } from "../state/gameState.svelte.ts";
 import { gameConfig } from "./gameConfig.ts";
+import { getWords } from "./wordCache.ts";
 
 export async function generateGrid(wordLength: number) : Promise<Token[]>{
-    const allWords: string[] = await fetchWords(wordLength);
+    const allWords: string[] = await getWords(wordLength);
     const totalcells = gameConfig.gridColsInter * gameConfig.gridRows;
 
     const raw: Token[] = Array.from(
@@ -222,7 +223,6 @@ function checkParanthesis(arr: string[]): {startIndex: number, endIndex: number}
 
 export function calcLikeness(word: string, password: string): number{
     let likeness = 0;
-    console.log(word, password)
 
     for(let i = 0; i < word.length; i++){
         const wordLetter = word[i];
@@ -257,8 +257,3 @@ function generateNonInterData(rows: number): string[]{
     });
 }
 
-async function fetchWords(wordLength: number): Promise<string[]> {
-    const res = await fetch(`/data/words/words_${wordLength}.json`);
-    if(!res.ok) throw new Error(`Failed to fetch words for length ${wordLength}`);
-    return res.json();
-}
