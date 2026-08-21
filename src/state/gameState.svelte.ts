@@ -19,7 +19,7 @@ export const gameStateData = $state({
 });
 
 export function loadLevel(index: number){
-    console.log(index )
+    console.log(index);
     const level = levels[index];
     gameStateData.currentLevel = level.level;
     gameStateData.wordLength = level.wordLength;
@@ -32,6 +32,11 @@ export function loadLevel(index: number){
     gameStateData.grid = [];
     gameStateData.words = [];
     gameStateData.gridLoaded = false;
+}
+
+export function resetLevel(): void{
+    gameStateData.currentLevel = 1;
+    gameStateData.status = "playing";
 }
 
 

@@ -1,10 +1,15 @@
 <script lang="ts">
     import { wait } from "$lib/utils";
+    import { onMount } from "svelte";
     import Game from "../../components/Game.svelte";
-    import { gameStateData } from "../../state/gameState.svelte";
+    import MenuButton from "../../components/MenuButton.svelte";
+    import MenuLink from "../../components/MenuLink.svelte";
+    import { gameStateData, resetLevel } from "../../state/gameState.svelte";
 
-    type Screen = "game" | "success";
+    type Screen = "game" | "success" | "lost";
     let screen = $state<Screen>("game");
+
+    onMount(() => {gameStateData.status = "playing";});
 
     $effect(() => {
         if(gameStateData.status === "won"){
@@ -16,8 +21,15 @@
             }
             runSequence();
         }
+        else if(gameStateData.status === "lost"){
+            screen = "lost";
+        }
     });
 
+    function onRetry(){
+        resetLevel();
+        screen = "game";
+    }
 </script>
 
 {#if screen === "game"}
@@ -28,6 +40,23 @@
             <img src="/images/thumbs_up.gif" alt="Fallout boy making thumbs up gif">
             <p>Password Accepted</p>
         </div>
+    </div>
+{:else if screen === "lost"}
+    <div id="status-screen">
+        <div id="container">
+            <p>Game Over</p>
+        </div>
+        <MenuLink
+            onClick={() => {}}
+            link="/main-menu"
+            text={"[Back]"}
+            linkStyle={"bottom-left"}
+        />
+        <MenuButton
+            onClick={onRetry}
+            text={"[Retry]"}
+            position={"bottom-right"}
+        />
     </div>
 {/if}
 

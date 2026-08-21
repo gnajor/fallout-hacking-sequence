@@ -12,6 +12,7 @@
 
     onMount(async () => {
         audio.activeEl = musicEl;
+        audio.volume = 0;
     });
 
     $effect(() => {
@@ -43,9 +44,9 @@
 
 <audio 
     bind:this={musicEl} 
-    src={tracks[audio.trackIndex]} 
-    autoplay 
+    src={tracks[audio.trackIndex]}  
     onended={nextTrack}
+    volume={0}
 ></audio>
 
 <div id="wrapper">

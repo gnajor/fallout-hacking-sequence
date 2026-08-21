@@ -1,5 +1,10 @@
 <script lang="ts">
     import { audio } from "$lib/audioState.svelte";
+    import { onMount } from "svelte";
+
+    let inputEl = $state<HTMLInputElement>();
+
+    onMount(() => {audio.volume = Number(inputEl?.value) ?? 0;});
 
     function oninput(e: Event) {
         if(audio.activeEl){
@@ -14,6 +19,7 @@
 
 <div id="second-screen">
     <input 
+        bind:this={inputEl}
         type="range" 
         min="0" 
         max="100" 
@@ -34,12 +40,6 @@
 
 
 <style>
-    #audio{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
     svg{
         width: 2.5rem;
         height: 2.5rem;

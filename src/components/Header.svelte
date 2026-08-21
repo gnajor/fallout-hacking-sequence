@@ -67,7 +67,7 @@
     h1{
         color: var(--main-color);
         margin: 0;
-        font-size: clamp(0.8rem, 1.2vw, 1.4rem);
+        font-size: var(--text-ml);
         font-weight: normal;
     }
 

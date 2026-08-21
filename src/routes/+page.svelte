@@ -54,7 +54,7 @@
         color: var(--main-color);
         position: absolute;
         bottom: 0;
-        font-size: 1.5vw;
+        font-size: var(--text-md);
         left: 50%;
         transform: translate(-50%, 0%);
         width:max-content;

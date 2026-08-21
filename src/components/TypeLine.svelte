@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { playTyping } from "$lib/keySounds";
+
     const {text, cancelled, speed=10, onDone} = $props<{
         text: String,
         cancelled: boolean,
@@ -24,6 +26,7 @@
                 clearInterval(interval)
                 onDone?.();
             }
+            //playTyping();
         }, speed);
 
         return () =>  clearInterval(interval);

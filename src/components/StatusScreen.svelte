@@ -48,5 +48,6 @@ const {loadingType}: {loadingType: "level" | "initiating"} = $props();
 
     h1{
         color: var(--main-color);
+        font-size: var(--text-lg);
     }
 </style>

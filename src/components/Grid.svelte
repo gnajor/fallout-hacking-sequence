@@ -1,6 +1,7 @@
 <script lang="ts">
     import { calcLikeness } from "$lib/gameLogic";
-    import { randomItem } from "$lib/utils";
+    import { playEnter, playTyping } from "$lib/keySounds";
+    import { randomItem, wait } from "$lib/utils";
     import { gameStateData } from "../state/gameState.svelte";
     import type { Token } from "../types/game";
 
@@ -29,6 +30,7 @@
                 gameStateData.gridLoaded = true;
                 return;
             }
+            //playTyping();
             visibleCount++;
         }, 10);
 
@@ -36,7 +38,7 @@
     });
 
     function onmouseenter(item: Token){
-        if(item.type === "non_inter") return;
+        if(item.type === "non_inter" || !gameStateData.gridLoaded) return;
 
         if(item.type === "bracket"){
             hoveredGroupId = item.groupId ?? null;
@@ -50,6 +52,7 @@
             hoveredGroupId = item.groupId ?? null;
             gameStateData.hovering = item.groupId ?? item.value;
         }
+        gameStateData.hovering.split("").forEach(() => playTyping());
     }
 
     function onmouseleave(){
@@ -140,6 +143,7 @@
             param = (item.type !== "word") ? item.groupId.split(" ")[1] : item.groupId;
         }
         onGuess(param, item.type, item.groupId ?? "");
+        playEnter();
     }
 
 </script>
@@ -153,6 +157,7 @@
                 tabindex={item.type !== 'non_inter' ? 0 : -1}
                 class:marked={item.groupId === hoveredGroupId}
                 class:non-inter={item.type === "non_inter"}
+                class:not-ready={!gameStateData.gridLoaded}
                 class:hidden={i >= visibleCount}
                 onmouseenter={() => onmouseenter(item)}
                 {onmouseleave}
@@ -183,12 +188,12 @@
 
     .grid button {
         font-family: "fallout_font";
-        font-size: clamp(0.55rem, 1.6vw, 1.4rem); /* clamp prevents collapsing on tiny screens */
+        font-size: var(--text-ml); /* clamp prevents collapsing on tiny screens */
         color: var(--main-color);
     }
 
     .grid .marked,
-    .grid > button:not(.non-inter):hover{
+    .grid > button:not(.non-inter, .not-ready):hover{
         background-color: var(--main-color);
         color: #000 !important;
         text-shadow: none;

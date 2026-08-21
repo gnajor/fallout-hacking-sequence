@@ -17,12 +17,17 @@
     let headerLoaded = $state(false);
     let cancelled = $state(false);
     let loaded = $state(false);
-    let loadingScreen = $state(false);
 
     onMount(async () => {
         loadLevel(gameStateData.currentLevel - 1);
-        setTimeout(() => { loaded = true;}, 1000);
-        gameStateData.grid = await generateGrid(gameStateData.wordLength);
+        if(showLevel){
+            setTimeout(() => { loaded = true;}, 1000);
+            gameStateData.grid = await generateGrid(gameStateData.wordLength);
+        }
+        else{
+            gameStateData.grid = await generateGrid(gameStateData.wordLength);
+            loaded = true;
+        }
     });
 
     $effect(() => {
