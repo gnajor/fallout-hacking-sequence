@@ -4,6 +4,7 @@
     import { onDestroy, onMount } from "svelte";
 
     let videoEl: HTMLVideoElement;
+    const url = "https://pub-a276f496cd8d4c68a7b57baf9cc9c08e.r2.dev/videos/"
 
     $effect(() => {
         audio.activeEl = videoEl;
@@ -28,7 +29,7 @@
 <div id="screen">
     <video autoplay loop bind:this={videoEl}>
         <source
-            src="/videos/fallout-video-smaller.mp4"
+            src="{url}fallout-video-smaller.mp4"
             type="video/mp4"
         >
     </video>
