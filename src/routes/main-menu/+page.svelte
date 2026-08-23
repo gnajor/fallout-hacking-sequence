@@ -84,11 +84,4 @@
         gap: calc(var(--text-md));
         font-size: 1.3rem;
     }
-
-    a{
-        padding: 0.25rem 3rem;
-        display: block;
-        cursor: var(--main-cursor);
-        font-size:var(--text-md);
-    }
 </style>

@@ -15,9 +15,10 @@
     "cf-typegen": "wrangler types"
   },
   "devDependencies": {
-    "@sveltejs/adapter-cloudflare": "^7.2.9",
-    "@sveltejs/kit": "^2.70.3",
+    "@sveltejs/adapter-cloudflare": "^0.0.1",
+    "@sveltejs/kit": "^0.0.30",
     "@sveltejs/vite-plugin-svelte": "^7.3.0",
+    "@types/node": "^26.2.0",
     "svelte": "^5.56.1",
     "svelte-check": "^4.6.0",
     "typescript": "^6.0.3",

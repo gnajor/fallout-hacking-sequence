@@ -63,13 +63,3 @@
         />
     </div>
 {/if}
-
-<style>
-    #back-button{
-        position: absolute;
-        bottom:0;
-        left:0;
-        margin: 2rem 2.5rem;
-        font-size: var(--text-md);
-    }
-</style>

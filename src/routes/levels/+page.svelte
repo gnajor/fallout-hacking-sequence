@@ -74,10 +74,6 @@
         border:1px solid var(--main-color);
         font-size: var(--text-md);
     }
-    
-    #back-button{
-        width:fit-content;
-    }
 
     a:hover{
         background-color: var(--main-color);
