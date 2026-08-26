@@ -1,7 +1,7 @@
 <script lang="ts">
     import { calcLikeness } from "$lib/gameLogic";
-    import { playEnter, playTyping } from "$lib/keySounds";
-    import { randomItem, wait } from "$lib/utils";
+    import { playEnter, playTyping, stopPlayingSound } from "$lib/keySounds";
+    import { randomItem } from "$lib/utils";
     import { gameStateData } from "../state/gameState.svelte";
     import type { Token } from "../types/game";
 
@@ -28,9 +28,10 @@
             if(visibleCount >= gameStateData.grid.length){
                 clearInterval(interval);
                 gameStateData.gridLoaded = true;
+                stopPlayingSound();
                 return;
             }
-            //playTyping();
+            playTyping();
             visibleCount++;
         }, 10);
 

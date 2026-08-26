@@ -38,7 +38,6 @@
     {/if}
 </div>
 
-
 <style>
     svg{
         width: 2.5rem;

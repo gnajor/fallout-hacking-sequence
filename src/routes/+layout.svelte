@@ -21,6 +21,8 @@
             musicEl.volume = 0;
             audio.volume = 0;
         }
+                console.log(tracks)
+        console.log(audio.trackIndex)
     });
 
     $effect(() => {

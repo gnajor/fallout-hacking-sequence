@@ -1,15 +1,22 @@
 {
-    "$schema": "node_modules/wrangler/config-schema.json",
-    "name": "fallout-hacking-sequence",
-    "compatibility_date": "2026-08-20",
-    "main": ".svelte-kit/cloudflare/_worker.js",
-    "assets": {
-      "binding": "ASSETS",
-      "directory": ".svelte-kit/cloudflare"
-    },
-    "workers_dev": true,
-    "preview_urls": true,
-    "observability": {
-        "enabled": true
-    }
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "fallout-hacking-sequence",
+	"compatibility_date": "2026-08-20",
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare"
+	},
+	"workers_dev": true,
+	"preview_urls": true,
+	"observability": {
+		"enabled": true
+	},
+	"d1_databases": [
+		{
+			"binding": "users",
+			"database_name": "users",
+			"database_id": "5b5eec12-aae4-4fee-b7ef-82e9485c7fda"
+		}
+	]
 }

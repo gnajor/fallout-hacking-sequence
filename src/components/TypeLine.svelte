@@ -26,7 +26,7 @@
                 clearInterval(interval)
                 onDone?.();
             }
-            //playTyping();
+            playTyping();
         }, speed);
 
         return () =>  clearInterval(interval);
