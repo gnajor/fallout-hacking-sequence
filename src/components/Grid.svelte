@@ -31,7 +31,7 @@
                 stopPlayingSound();
                 return;
             }
-            playTyping();
+            //playTyping();
             visibleCount++;
         }, 10);
 
