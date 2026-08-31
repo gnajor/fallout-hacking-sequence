@@ -1,11 +1,12 @@
 <script lang="ts">
-	import favicon from "$lib/assets/favicon.svg";
+	import favicon from "$lib/assets/favicon.png";
     import AudioController from "../components/AudioController.svelte";
     import { audio, tracks } from "$lib/audioState.svelte";
     import { onMount } from "svelte";
     import { page } from "$app/state";
 	import "../app.css";
     import { sessionState } from "../state/sessionState.svelte";
+    import { gameConfig } from "$lib/gameConfig.js";
 
 	let { data, children } = $props();
 	let musicEl: HTMLAudioElement;
