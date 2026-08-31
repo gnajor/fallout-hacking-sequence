@@ -12,13 +12,14 @@
 
     type Screen = "game" | "success" | "lost";
     let screen = $state<Screen>("game");
-    const {form} = $props();
+    const {form}: {form: any} = $props();
 
     onMount(() => {gameStateData.status = "playing";});
 
     async function submitScore(){
         const formData = new FormData();
         formData.append("score", String(gameStateData.currentScore));
+        formData.append("level", String(gameStateData.currentLevel - 1));
 
         const res = await fetch("?/postBestRunScore", {
             method: "POST",
@@ -39,9 +40,22 @@
             }
             runSequence();
         }
-        else if(gameStateData.status === "lost" && sessionState.username !== ""){
+        else if(gameStateData.status === "lost"){
             screen = "lost";
-            submitScore();
+            if(sessionState.username !== "") submitScore();
+        }
+    });
+
+    $effect(() => {
+        if(form?.success){
+            if(form?.username) {
+                sessionState.username = form.username;
+            }
+
+            if(form?.level && form?.score){
+                sessionState.bestRunLevel = form.level;
+                sessionState.bestRunScore = form.score;
+            }
         }
     });
 
@@ -52,7 +66,7 @@
 </script>
 
 {#if screen === "game"}
-    <Game showLevel={true}/>
+    <Game showLevel={true} runMode={true}/>
 {:else if screen === "success"}
     <div id="status-screen">
         <div id="container">

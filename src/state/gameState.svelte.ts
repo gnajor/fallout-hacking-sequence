@@ -20,6 +20,11 @@ export const gameStateData = $state({
 });
 
 export function loadLevel(index: number){
+    loadRunLevel(index);
+    gameStateData.currentScore = 0;
+}
+
+export function loadRunLevel(index: number){
     const level = levels[index];
     gameStateData.currentLevel = level.level;
     gameStateData.wordLength = level.wordLength;
@@ -32,7 +37,6 @@ export function loadLevel(index: number){
     gameStateData.grid = [];
     gameStateData.words = [];
     gameStateData.gridLoaded = false;
-    gameStateData.currentScore = 0;
 }
 
 export function resetLevel(): void{
@@ -42,6 +46,7 @@ export function resetLevel(): void{
 }
 
 export function calculateSetScore(): void{
+    console.log("hello")
     const level = gameStateData.currentLevel - 1;
     const attemptsLeft = gameStateData.attemptsLeft;
     const baseScore = Math.round(100 * Math.pow(1.4, level - 1));

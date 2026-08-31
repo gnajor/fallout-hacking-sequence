@@ -1,11 +1,10 @@
 import { fail } from "@sveltejs/kit";
-import type { RequestEvent } from "../../$types";
+import type { RequestEvent } from "@sveltejs/kit";
 import { getDB } from "../db";
-import { sessionState } from "../../../state/sessionState.svelte";
 import type { user } from "../../../types/game";
 import { isNextDay, isSameDay } from "$lib/utils";
 
-export async function postBestDailyStreakAction({cookies, platform} : RequestEvent){
+export async function postDailyStreakAction({cookies, platform} : RequestEvent){
     const userId = cookies.get("userId");
     if(!userId){
         return fail(401, {error: "Not logged in"});
@@ -34,11 +33,12 @@ export async function postBestDailyStreakAction({cookies, platform} : RequestEve
     }
 
     try{
-        await db
+        const streakResult = await db
             .prepare("UPDATE users SET daily_streak = ?, last_daily_date = ? WHERE id = ?")
-            .bind(newStreak, currentDate)
+            .bind(newStreak, currentDate, userId)
             .run();
 
+        if(streakResult.meta.changed_db) return {success: true, streak: newStreak}; 
         return {success: true};
     } catch(err){
         console.error("Failed to post bestDailyStreak:", err);

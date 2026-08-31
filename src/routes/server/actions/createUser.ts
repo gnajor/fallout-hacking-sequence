@@ -19,7 +19,7 @@ export async function createUserAction({request, cookies, platform}: RequestEven
     try{
         const result = await db
             .prepare("INSERT INTO users (id, name) VALUES (?, ?)")
-            .bind(userId, username)
+            .bind(userId, cleanUsername)
             .run();
 
         cookies.set("userId", userId, {
@@ -29,9 +29,8 @@ export async function createUserAction({request, cookies, platform}: RequestEven
             secure: true,
             maxAge: 60 * 60 * 24 * 365 * 5
         });
-        sessionState.username = username;
 
-        return {success: true};
+        return {success: true, username: cleanUsername};
     } catch(err){
         console.error("Failed to create user:", err);
         return fail(500, { error: "Something went wrong" });

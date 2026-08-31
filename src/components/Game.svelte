@@ -1,6 +1,6 @@
 <script lang="ts">
     import { generateGrid } from "$lib/gameLogic";
-    import { gameStateData, loadLevel } from "../state/gameState.svelte";
+    import { gameStateData, loadLevel, loadRunLevel } from "../state/gameState.svelte";
     import { onMount } from "svelte";
     import { startScanClock } from "$lib/scanClock";
     import Grid from "./Grid.svelte";
@@ -9,7 +9,7 @@
     import StatusScreen from "./StatusScreen.svelte";
     import { wait } from "$lib/utils";
 
-    let {showLevel}: {showLevel: boolean} = $props();
+    let {showLevel, runMode}: {showLevel: boolean, runMode: boolean} = $props();
 
     let terminalEl = $state<HTMLElement>();
     let barEl = $state<HTMLElement>();
@@ -19,7 +19,9 @@
     let loaded = $state(false);
 
     onMount(async () => {
-        loadLevel(gameStateData.currentLevel - 1);
+        if(runMode) loadRunLevel(gameStateData.currentLevel - 1);
+        else loadLevel(gameStateData.currentLevel - 1);
+        
         if(showLevel){
             setTimeout(() => { loaded = true;}, 1000);
             gameStateData.grid = await generateGrid(gameStateData.wordLength);

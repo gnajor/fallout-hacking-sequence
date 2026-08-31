@@ -62,8 +62,8 @@
 
     function onGuess(word: string, type: string, groupId: string | undefined): void{
         if(word === gameStateData.password){
-            gameStateData.status = "won";
             calculateSetScore();
+            gameStateData.status = "won";
             return;
         }
 

@@ -25,7 +25,7 @@
 </script>
 
 {#if gameStateData.status === "playing"}
-    <Game showLevel={pressedNext ? true : false}/>
+    <Game showLevel={pressedNext ? true : false} runMode={false}/>
 {:else if gameStateData.status === "won"} 
     <div id="status-screen">
         <div id="container">
@@ -52,7 +52,7 @@
         </div>
         <MenuLink
             onClick={() => {}}
-            link="/main-menu"
+            link="/levels"
             text={"[Back]"}
             linkStyle={"bottom-left"}
         />

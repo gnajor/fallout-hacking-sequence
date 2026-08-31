@@ -5,14 +5,24 @@
     import { onMount } from "svelte";
     import { page } from "$app/state";
 	import "../app.css";
+    import { sessionState } from "../state/sessionState.svelte";
 
-	let { children } = $props();
+	let { data, children } = $props();
 	let musicEl: HTMLAudioElement;
     const isLandingPage = $derived(page.url.pathname === "/");
     
     onMount(async () => {
         audio.activeEl = musicEl;
         audio.volume = 0;
+        const user = data.user;
+
+        if(user){
+            sessionState.username = user.name;
+            sessionState.bestRunScore = user.best_run_score;
+            sessionState.bestRunLevel = user.best_run_level;
+            sessionState.leaderboardScore = user.best_run_score  * (user.daily_streak === 0 ? 1 : user.daily_streak);
+            sessionState.dailyStreak = user.daily_streak;
+        }
     });
 
     $effect(() => {
@@ -35,6 +45,7 @@
 
 	function nextTrack() {
         audio.trackIndex = (audio.trackIndex + 1) % tracks.length;
+        audio.activeEl?.play();
     }
 </script>
 
