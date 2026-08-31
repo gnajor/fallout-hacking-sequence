@@ -6,20 +6,20 @@ export const gameStateData = $state({
     grid: [] as Token[],
     words: [] as string[],
     attemptsLeft: 4,
-    maxTriesOutput: 5 as number,
+    maxTriesOutput: 5,
     outputLog: [] as string[][],
     status: "playing" as "playing" | "won" | "lost",
     gridLoaded: false,
-    hovering: "" as string,
+    hovering: "",
     currentLevel: 1,
-    
+    currentScore: 0,
+
     wordLength: 4 as 4 | 5 | 6 | 7 | 8 | 9,
     wordsAmount: 10,
     distribution: [] as {likeness: number; count: number}[]
 });
 
 export function loadLevel(index: number){
-    console.log(index);
     const level = levels[index];
     gameStateData.currentLevel = level.level;
     gameStateData.wordLength = level.wordLength;
@@ -32,11 +32,29 @@ export function loadLevel(index: number){
     gameStateData.grid = [];
     gameStateData.words = [];
     gameStateData.gridLoaded = false;
+    gameStateData.currentScore = 0;
 }
 
 export function resetLevel(): void{
     gameStateData.currentLevel = 1;
+    gameStateData.currentScore = 0;
     gameStateData.status = "playing";
+}
+
+export function calculateSetScore(): void{
+    const level = gameStateData.currentLevel - 1;
+    const attemptsLeft = gameStateData.attemptsLeft;
+    const baseScore = Math.round(100 * Math.pow(1.4, level - 1));
+    
+    const attemptMultipliers: Record<number, number> = {
+        3: 2.0,
+        2: 1.5,
+        1: 1.1,
+    };
+
+    const attemptMultiplier = (attemptsLeft > 3 ? 2.0 : attemptMultipliers[attemptsLeft]) ?? 1.0;
+    const perfectionBonus = attemptsLeft >= 3 ? 500 : 0;
+    gameStateData.currentScore += Math.round(baseScore * attemptMultiplier) + perfectionBonus;
 }
 
 

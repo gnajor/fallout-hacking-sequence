@@ -1,5 +1,6 @@
 <script lang="ts">
     import MenuLink from "../../components/MenuLink.svelte";
+    import { getDisplayableUsername, sessionState } from "../../state/sessionState.svelte";
 
     const menuLinks = [
         {
@@ -19,13 +20,12 @@
             text: "LEADERBOARD"
         }
     ]
-
 </script>
 
 <div id="screen">
     <header>
         <h1>ROBCO Industries (TM) Termlink</h1>
-        <h2>Main Menu</h2>
+        <h2>Main Menu {sessionState.username === "" ? "" : "- Welcome " + getDisplayableUsername()}</h2>
     </header>
     <main>
         {#each menuLinks as item}   
@@ -38,8 +38,8 @@
         {/each}
     </main>
     <footer>
-        <p>Daily Streak:</p>
-        <p>Best Run:</p>
+        <p>Daily Streak:{sessionState.dailyStreak ?? 0}</p>
+        <p>Best Run:{sessionState.bestRunScore ?? 0}</p>
     </footer>
 </div>
 

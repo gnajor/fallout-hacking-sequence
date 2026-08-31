@@ -1,15 +1,15 @@
 <script lang="ts">
 	import favicon from "$lib/assets/favicon.svg";
+    import AudioController from "../components/AudioController.svelte";
     import { audio, tracks } from "$lib/audioState.svelte";
     import { onMount } from "svelte";
-	import "../app.css";
-    import AudioController from "../components/AudioController.svelte";
     import { page } from "$app/state";
+	import "../app.css";
 
 	let { children } = $props();
 	let musicEl: HTMLAudioElement;
     const isLandingPage = $derived(page.url.pathname === "/");
-
+    
     onMount(async () => {
         audio.activeEl = musicEl;
         audio.volume = 0;
@@ -20,9 +20,7 @@
             audio.activeEl = musicEl;
             musicEl.volume = 0;
             audio.volume = 0;
-        }
-                console.log(tracks)
-        console.log(audio.trackIndex)
+        } 
     });
 
     $effect(() => {

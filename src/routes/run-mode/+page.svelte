@@ -5,11 +5,29 @@
     import MenuButton from "../../components/MenuButton.svelte";
     import MenuLink from "../../components/MenuLink.svelte";
     import { gameStateData, resetLevel } from "../../state/gameState.svelte";
+    import { sessionState } from "../../state/sessionState.svelte";
+    import InputName from "../../components/InputName.svelte";
+    import type { ActionResult } from "@sveltejs/kit";
+    import { applyAction, deserialize } from "$app/forms";
 
     type Screen = "game" | "success" | "lost";
     let screen = $state<Screen>("game");
+    const {form} = $props();
 
     onMount(() => {gameStateData.status = "playing";});
+
+    async function submitScore(){
+        const formData = new FormData();
+        formData.append("score", String(gameStateData.currentScore));
+
+        const res = await fetch("?/postBestRunScore", {
+            method: "POST",
+            body: formData
+        });
+
+        const result: ActionResult = deserialize(await res.text());
+        applyAction(result);
+    }
 
     $effect(() => {
         if(gameStateData.status === "won"){
@@ -21,8 +39,9 @@
             }
             runSequence();
         }
-        else if(gameStateData.status === "lost"){
+        else if(gameStateData.status === "lost" && sessionState.username !== ""){
             screen = "lost";
+            submitScore();
         }
     });
 
@@ -43,20 +62,25 @@
     </div>
 {:else if screen === "lost"}
     <div id="status-screen">
-        <div id="container">
-            <p>Game Over</p>
-        </div>
-        <MenuLink
-            onClick={() => {}}
-            link="/main-menu"
-            text={"[Back]"}
-            linkStyle={"bottom-left"}
-        />
-        <MenuButton
-            onClick={onRetry}
-            text={"[Retry]"}
-            position={"bottom-right"}
-        />
+        {#if sessionState.username === ""}
+            <InputName form/>
+        {:else}
+            <div id="container">
+                <p>Game Over</p>
+                <p>The password was: {gameStateData.password}</p>
+            </div>
+            <MenuLink
+                onClick={() => {}}
+                link="/main-menu"
+                text={"[Back]"}
+                linkStyle={"bottom-left"}
+            />
+            <MenuButton
+                onClick={onRetry}
+                text={"[Retry]"}
+                position={"bottom-right"}
+            />
+        {/if}
     </div>
 {/if}
 

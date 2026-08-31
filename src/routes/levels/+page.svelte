@@ -3,6 +3,7 @@
     import { levels } from "$lib/gameConfig";
     import MenuLink from "../../components/MenuLink.svelte";
     import { gameStateData } from "../../state/gameState.svelte";
+    import {sessionState} from "../../state/sessionState.svelte";
 </script>
 
 <div id="screen">
@@ -16,6 +17,7 @@
                 <a 
                     href="/practice-mode"
                     class="level"
+                    class:non-playable={sessionState.bestRunLevel < level.level}
                     onclick={() => {gameStateData.currentLevel = level.level}}
                 >{level.level < 10 ? "0" + level.level : level.level}</a>
             {/each}
@@ -75,7 +77,13 @@
         font-size: var(--text-md);
     }
 
-    a:hover{
+    a.non-playable{
+        border-color: var(--main-darkest-color);
+        color: var(--main-darkest-color);
+        pointer-events: none;
+    }
+
+    a:not(.non-playable):hover{
         background-color: var(--main-color);
         color: black;
     }

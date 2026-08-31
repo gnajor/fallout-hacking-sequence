@@ -7,3 +7,12 @@ export interface Token {
     groupId?: string,
     used?: boolean,
 }
+
+export interface user{
+    name: string,
+    best_run_score: number,
+    best_run_level: number,
+    daily_streak: number,
+    created_at: string,
+    last_daily_date: string,
+}

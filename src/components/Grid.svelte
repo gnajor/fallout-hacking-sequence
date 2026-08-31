@@ -2,7 +2,7 @@
     import { calcLikeness } from "$lib/gameLogic";
     import { playEnter, playTyping, stopPlayingSound } from "$lib/keySounds";
     import { randomItem } from "$lib/utils";
-    import { gameStateData } from "../state/gameState.svelte";
+    import { calculateSetScore, gameStateData } from "../state/gameState.svelte";
     import type { Token } from "../types/game";
 
     let {headerLoaded, cancelled = $bindable(false)}: {
@@ -63,6 +63,8 @@
     function onGuess(word: string, type: string, groupId: string | undefined): void{
         if(word === gameStateData.password){
             gameStateData.status = "won";
+            calculateSetScore();
+            return;
         }
 
         if(gameStateData.maxTriesOutput === gameStateData.outputLog.length){
