@@ -10,10 +10,13 @@ Bracket sequences like `(#$@!)`, `[>.-]`, `{!=;}` can be clicked for a random bo
 
 ## Screenshots
 
-| Start | Main Menu | Game | Levels |
-|-------|-----------|------|--------|
-| ![Start](static/images/screenshots/start.png) | ![Main Menu](static/images/screenshots/main-menu.png) | ![Game](static/images/screenshots/game.png) | ![Levels](static/images/screenshots/levels.png) |
+| Start | Main Menu |
+|-------|-----------|
+| ![Start](static/images/screenshots/start.png) | ![Main Menu](static/images/screenshots/main-menu.png) |
 
+| Game | Levels |
+|------|--------|
+![Game](static/images/screenshots/game.png) | ![Levels](static/images/screenshots/levels.png) |
 ## Game Modes
 
 - **Daily Challenge** — a new puzzle every day. One shot, no retries. *(coming soon)*
