@@ -43,9 +43,14 @@
         }
     });
 
+    $effect(() =>{
+        if(audio.trackIndex){
+            musicEl.play();
+        }
+    })
+
 	function nextTrack() {
         audio.trackIndex = (audio.trackIndex + 1) % tracks.length;
-        audio.activeEl?.play();
     }
 </script>
 

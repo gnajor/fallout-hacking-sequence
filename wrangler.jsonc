@@ -10,7 +10,15 @@
 	"workers_dev": true,
 	"preview_urls": true,
 	"observability": {
-		"enabled": true
+		"enabled": false,
+		"head_sampling_rate": 1,
+		"redact_query_string": false,
+		"logs": {
+			"enabled": true,
+			"head_sampling_rate": 1,
+			"persist": true,
+			"invocation_logs": true
+		},
 	},
 	"d1_databases": [
 		{
@@ -18,5 +26,10 @@
 			"database_name": "users",
 			"database_id": "5b5eec12-aae4-4fee-b7ef-82e9485c7fda"
 		}
-	]
+	],
+	"traces": {
+		"enabled": false,
+		"persist": true,
+		"head_sampling_rate": 1
+	}
 }
