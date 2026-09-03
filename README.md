@@ -10,16 +10,23 @@ Bracket sequences like `(#$@!)`, `[>.-]`, `{!=;}` can be clicked for a random bo
 
 ## Screenshots
 
-| Start | Main Menu | Game | Levels |
-|-------|-----------|------|--------|
-| ![Start](static/images/screenshots/start.png) | ![Main Menu](static/images/screenshots/main-menu.png) | ![Game](static/images/screenshots/game.png) | ![Levels](static/images/screenshots/levels.png) |
+| Start | Main Menu |
+|-------|-----------|
+| ![Start](static/images/screenshots/start.png) | ![Main Menu](static/images/screenshots/main-menu.png) |
+
+| Game | Levels |
+|------|--------|
+| ![Game](static/images/screenshots/game.png) | ![Levels](static/images/screenshots/levels.png) |
 
 ## Game Modes
 
-- **Daily Challenge** — a new puzzle every day. One shot, no retries. *(coming soon)*
-- **Run Mode** — play levels back to back, accumulating a score. Progress through 20 levels of increasing difficulty.
-- **Practice Mode** — pick any level and play without pressure. No score recorded.
-- **Leaderboard** — *(coming soon)*
+**Daily Challenge** — a new puzzle every day. One shot, no retries. *(coming soon)*
+
+**Run Mode** — play levels back to back, accumulating a score. Progress through 20 levels of increasing difficulty.
+
+**Practice Mode** — pick any level and play without pressure. No score recorded.
+
+**Leaderboard** — *(coming soon)*
 
 ## Levels
 
@@ -48,12 +55,17 @@ score = round(base × multiplier) + perfection bonus
 
 ## Tech Stack
 
-- **Framework** — SvelteKit 5 with Svelte 5 runes (`$state`, `$derived`, `$effect`)
-- **Language** — TypeScript throughout
-- **Deployment** — Cloudflare Workers
-- **Database** — Cloudflare D1 (SQLite) for user accounts and leaderboard
-- **Assets** — Cloudflare R2 for music tracks
-- **Styling** — vanilla CSS with custom properties, no UI library
+**Framework** — SvelteKit 5 with Svelte 5 runes (`$state`, `$derived`, `$effect`)
+
+**Language** — TypeScript throughout
+
+**Deployment** — Cloudflare Workers
+
+**Database** — Cloudflare D1 (SQLite) for user accounts and leaderboard
+
+**Assets** — Cloudflare R2 for music tracks
+
+**Styling** — vanilla CSS with custom properties, no UI library
 
 ## Project Structure
 
@@ -113,51 +125,11 @@ static/
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js 20+
-- A Cloudflare account (for D1 and deployment)
-
-### Install
+Node.js 20+ and a Cloudflare account are required.
 
 ```bash
 npm install
-```
-
-### Local development
-
-```bash
 npm run dev
-```
-
-### Database setup
-
-Create a D1 database:
-
-```bash
-npx wrangler d1 create fallout-game
-```
-
-Add the database ID to `wrangler.jsonc`, then create the users table:
-
-```bash
-npx wrangler d1 execute fallout-game --command "
-  CREATE TABLE IF NOT EXISTS users (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    best_run_score INTEGER DEFAULT 0,
-    best_run_level INTEGER DEFAULT 0,
-    daily_streak INTEGER DEFAULT 0,
-    last_daily_date TEXT DEFAULT '',
-    created_at TEXT DEFAULT (datetime('now'))
-  )
-"
-```
-
-### Deploy
-
-```bash
-npm run deploy
 ```
 
 ## Audio
@@ -169,3 +141,4 @@ Music must be turned on manually by the user (browser autoplay policy). Once sta
 ## User Accounts
 
 Users are created lazily — anonymous play is allowed and accounts are only created when a player submits a score. Identity is stored in an `httpOnly` cookie tied to a D1 record. No passwords, no email required.
+EOF
