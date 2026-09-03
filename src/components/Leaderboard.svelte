@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { leaderboardUser } from "../types/game";
 
-    let {rows, users, currentUser}: {rows: number, users: leaderboardUser[], currentUser: leaderboardUser} = $props();
+    let {rows, users, currentUser}: {rows: number, users: leaderboardUser[], currentUser: leaderboardUser | null} = $props();
     let pageIndex: number = $state(0);
     let currentRankMin: number = $derived(rows * pageIndex);
     let currentRankMax: number = $derived(rows * (pageIndex + 1));
@@ -25,7 +25,7 @@
                 <p>{user.score}</p>
             </li>
         {/each}
-        {#if !userIsInCurrentUsers}
+        {#if !userIsInCurrentUsers && currentUser}
             <li 
                 class="outer-container current-user"
                 id="user-not-top"
