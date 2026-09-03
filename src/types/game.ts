@@ -16,3 +16,12 @@ export interface user{
     created_at: string,
     last_daily_date: string,
 }
+
+export interface leaderboardUser{
+    name: string,
+    daily_streak: number,
+    rank: number,
+    score: number,
+    best_run_score: number,
+    currentUser?: boolean
+}

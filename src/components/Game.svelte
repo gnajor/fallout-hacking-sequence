@@ -4,10 +4,10 @@
     import { onMount } from "svelte";
     import { startScanClock } from "$lib/scanClock";
     import Grid from "./Grid.svelte";
-    import Header from "./Header.svelte";
     import OutputContainer from "./OutputContainer.svelte";
     import StatusScreen from "./StatusScreen.svelte";
     import { wait } from "$lib/utils";
+    import GameHeader from "./GameHeader.svelte";
 
     let {showLevel, runMode}: {showLevel: boolean, runMode: boolean} = $props();
 
@@ -63,7 +63,7 @@
 
 {#if loaded}
     <div id="screen" class:pulse={pulse} bind:this={terminalEl}>
-        <Header bind:headerLoaded bind:cancelled/>
+        <GameHeader bind:headerLoaded bind:cancelled/>
         <main>
             {#if headerLoaded}
                 <Grid {headerLoaded} bind:cancelled/>

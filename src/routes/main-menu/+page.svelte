@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Footer from "../../components/Footer.svelte";
+    import Header from "../../components/Header.svelte";
     import MenuLink from "../../components/MenuLink.svelte";
     import { getDisplayableUsername, sessionState } from "../../state/sessionState.svelte";
 
@@ -16,17 +18,14 @@
             text: "PRACTICE MODE"
         },
         {
-            link: "",
+            link: "/leaderboard",
             text: "LEADERBOARD"
         }
     ]
 </script>
 
 <div id="screen">
-    <header>
-        <h1>ROBCO Industries (TM) Termlink</h1>
-        <h2>Main Menu {sessionState.username === "" ? "" : "- Welcome " + getDisplayableUsername()}</h2>
-    </header>
+    <Header text="Main Menu"/>
     <main>
         {#each menuLinks as item}   
             <MenuLink 
@@ -37,10 +36,7 @@
             />
         {/each}
     </main>
-    <footer>
-        <p>Daily Streak:{sessionState.dailyStreak ?? 0}</p>
-        <p>Best Run:{sessionState.bestRunScore ?? 0}</p>
-    </footer>
+    <Footer/>
 </div>
 
 <style>
@@ -50,32 +46,6 @@
         flex-direction: column;
         justify-content: space-between;
         height: 100%;
-    }
-
-    footer{
-        border-top: 1px solid var(--main-color);
-        display: flex;
-        justify-content: space-between;
-    }
-
-    footer p{
-        padding: 0.75rem 0;
-        font-size: var(--text-sm);
-    }
-
-    header{
-        display: flex;
-        flex-direction: column;
-        gap:0.4rem;
-    }
-
-    header h1{
-        font-size: var(--text-md);
-    }
-
-    header h2{
-        color: var(--main-darker-color);
-        font-size: var(--text-sm);
     }
 
     main{
